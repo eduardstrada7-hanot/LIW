@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Block admin panel from all crawlers
+Disallow: /admin-liwsecure
+Disallow: /admin-liwsecure/
+
+# Block API routes
+Disallow: /api/
+
+Sitemap: https://larryinverwholesale.com/sitemap.xml
