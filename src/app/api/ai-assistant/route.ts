@@ -49,14 +49,11 @@ function buildProductContext(userMessage: string): string {
     lines.push("CATALOG:\n" + catalogMatches.join("\n"));
   }
 
-  // Search weekly deals
+  // Search weekly deals — match item name only (not section title)
   const dealLines: string[] = [];
   for (const section of DEAL_SECTIONS) {
     for (const item of section.items) {
-      if (terms.some(t =>
-        item.name.toLowerCase().includes(t) ||
-        section.title.toLowerCase().includes(t)
-      )) {
+      if (terms.some(t => item.name.toLowerCase().includes(t))) {
         const price = item.price === "Market" ? "call for price" : `${item.price}${item.unit}`;
         dealLines.push(`  • ${item.name} | ${price}${item.note ? ` (${item.note})` : ""} [Weekly Deal — ${section.title}]`);
       }
@@ -107,7 +104,7 @@ function buildFallbackReply(userMessage: string): string {
   const dealHits: { name: string; price: string; unit: string; section: string }[] = [];
   for (const section of DEAL_SECTIONS) {
     for (const item of section.items) {
-      if (terms.some(t => item.name.toLowerCase().includes(t) || section.title.toLowerCase().includes(t))) {
+      if (terms.some(t => item.name.toLowerCase().includes(t))) {
         dealHits.push({ name: item.name, price: item.price, unit: item.unit, section: section.title });
       }
     }

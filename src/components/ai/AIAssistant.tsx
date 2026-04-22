@@ -72,12 +72,12 @@ function findProductChips(userText: string, aiText: string): SuggestionChip[] {
     }
   }
 
-  // Search DEAL_SECTIONS
+  // Search DEAL_SECTIONS — match item name only (not section title)
   for (const section of DEAL_SECTIONS) {
     if (chips.length >= 4) break;
     for (const item of section.items) {
       if (chips.length >= 4) break;
-      if (terms.some(t => item.name.toLowerCase().includes(t) || section.title.toLowerCase().includes(t))) {
+      if (terms.some(t => item.name.toLowerCase().includes(t))) {
         const product = dealItemToProduct(item, section, section.items.indexOf(item));
         if (!seen.has(product.id)) {
           seen.add(product.id);
@@ -101,8 +101,10 @@ export default function AIAssistant() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [unread, setUnread] = useState(0);
+  const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
   const bottomRef = useRef<HTMLDivElement>(null);
   const addItem = useCartStore((s) => s.addItem);
+  const removeItem = useCartStore((s) => s.removeItem);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -113,17 +115,14 @@ export default function AIAssistant() {
     setUnread(0);
   };
 
-  const handleChipClick = (chip: SuggestionChip) => {
-    const product = chip.product;
-    addItem(product, 1);
-    setMessages((m) => [
-      ...m,
-      {
-        role: "assistant",
-        content: `✅ Added **${product.name}** (${product.unitSize} — ${formatCurrency(product.price)}) to your cart! Anything else you need?`,
-      },
-    ]);
-    if (!open) setUnread((n) => n + 1);
+  const handleChipAdd = (chip: SuggestionChip) => {
+    addItem(chip.product, 1);
+    setAddedIds((s) => new Set(s).add(chip.product.id));
+  };
+
+  const handleChipRemove = (chip: SuggestionChip) => {
+    removeItem(chip.product.id);
+    setAddedIds((s) => { const n = new Set(s); n.delete(chip.product.id); return n; });
   };
 
   const sendMessage = async () => {
@@ -250,16 +249,27 @@ export default function AIAssistant() {
                       {/* Suggestion chips */}
                       {msg.chips && msg.chips.length > 0 && (
                         <div className="flex flex-col gap-1.5">
-                          {msg.chips.map((chip) => (
-                            <button
-                              key={chip.product.id}
-                              onClick={() => handleChipClick(chip)}
-                              className="flex items-center gap-2 px-3 py-2 bg-white border border-amber-200 hover:border-amber-400 hover:bg-amber-50 text-amber-700 rounded-xl text-xs font-medium text-left transition-all group"
-                            >
-                              <ShoppingCart size={12} className="shrink-0 group-hover:text-amber-600" />
-                              {chip.label}
-                            </button>
-                          ))}
+                          {msg.chips.map((chip) => {
+                            const isAdded = addedIds.has(chip.product.id);
+                            return (
+                              <div key={chip.product.id} className="flex items-center gap-1.5">
+                                <button
+                                  onClick={() => isAdded ? handleChipRemove(chip) : handleChipAdd(chip)}
+                                  className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-left transition-all flex-1 ${
+                                    isAdded
+                                      ? "bg-green-50 border border-green-300 text-green-700 hover:bg-red-50 hover:border-red-300 hover:text-red-600"
+                                      : "bg-white border border-amber-200 hover:border-amber-400 hover:bg-amber-50 text-amber-700"
+                                  }`}
+                                >
+                                  <ShoppingCart size={12} className="shrink-0" />
+                                  <span className="flex-1">{chip.label}</span>
+                                  <span className="text-[10px] font-bold ml-1">
+                                    {isAdded ? "✓ Added — tap to remove" : "+ Add"}
+                                  </span>
+                                </button>
+                              </div>
+                            );
+                          })}
                         </div>
                       )}
                     </div>
