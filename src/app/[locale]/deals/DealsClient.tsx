@@ -91,7 +91,7 @@ export default function DealsClient() {
       </div>
 
       {/* Sections */}
-      <div className="max-w-screen-xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-6">
+      <div className="max-w-screen-xl mx-auto px-2 sm:px-4 py-3 sm:py-8 space-y-3 sm:space-y-6">
         {DEAL_SECTIONS
           .filter((s) => activeSection === null || s.title === activeSection)
           .map((section, i) => (
@@ -149,16 +149,16 @@ function SectionCard({
       transition={{ delay: index * 0.04, duration: 0.4 }}
       className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden"
     >
-      {/* Header — matches specials style */}
-      <div className="flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-4 bg-stone-50 border-b border-stone-100">
-        <span className="text-2xl">{section.icon}</span>
-        <h2 className="font-serif text-base sm:text-lg font-bold text-stone-900 flex-1">{section.title}</h2>
-        <span className="bg-red-100 text-red-700 text-xs font-bold px-2.5 py-1 rounded-full shrink-0">
+      {/* Header */}
+      <div className="flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-4 bg-stone-50 border-b border-stone-100">
+        <span className="text-xl sm:text-2xl">{section.icon}</span>
+        <h2 className="font-serif text-sm sm:text-lg font-bold text-stone-900 flex-1 truncate">{section.title}</h2>
+        <span className="bg-red-100 text-red-700 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full shrink-0">
           {section.items.length} deals
         </span>
       </div>
 
-      {/* Items — matches specials row style exactly */}
+      {/* Items */}
       <div className="divide-y divide-stone-50">
         {section.items.map((item, idx) => {
           const product = dealItemToProduct(item, section, idx);
@@ -167,38 +167,38 @@ function SectionCard({
           return (
             <div
               key={`${item.name}-${idx}`}
-              className="flex items-center gap-2 sm:gap-4 px-4 sm:px-5 py-3 hover:bg-stone-50 transition-colors"
+              className="flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-3 hover:bg-stone-50 transition-colors"
             >
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-stone-800 leading-snug">
+                <p className="text-xs sm:text-sm font-semibold text-stone-800 leading-snug truncate">
                   {item.name}
                   {item.hot && (
-                    <span className="ml-1.5 bg-red-100 text-red-600 text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase">
+                    <span className="ml-1 bg-red-100 text-red-600 text-[9px] font-bold px-1 py-0.5 rounded-full uppercase">
                       Hot
                     </span>
                   )}
                 </p>
                 {item.note && (
-                  <p className="text-xs text-stone-400 mt-0.5">{item.note}</p>
+                  <p className="text-[10px] text-stone-400 mt-0.5 truncate">{item.note}</p>
                 )}
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-1.5 shrink-0">
                 {isMarket ? (
-                  <span className="text-xs font-semibold text-red-500 italic whitespace-nowrap">Call for Price</span>
+                  <span className="text-[10px] sm:text-xs font-semibold text-red-500 italic whitespace-nowrap">Call for Price</span>
                 ) : (
-                  <span className="text-sm font-bold text-stone-900 whitespace-nowrap">
+                  <span className="text-xs sm:text-sm font-bold text-stone-900 whitespace-nowrap">
                     {item.price}
-                    <span className="text-xs font-normal text-stone-400 ml-0.5">{item.unit}</span>
+                    <span className="text-[10px] font-normal text-stone-400 ml-0.5">{item.unit}</span>
                   </span>
                 )}
                 <button
                   onClick={() => onAdd(product.id, product)}
                   className={cn(
-                    "flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0",
+                    "flex items-center gap-0.5 px-2 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold transition-all shrink-0",
                     isAdded ? "bg-green-500 text-white" : "bg-red-600 hover:bg-red-700 text-white"
                   )}
                 >
-                  {isAdded ? <><Check size={11} /> Added!</> : <><ShoppingCart size={11} /> Add</>}
+                  {isAdded ? <><Check size={10} /> Added!</> : <><ShoppingCart size={10} /> Add</>}
                 </button>
               </div>
             </div>

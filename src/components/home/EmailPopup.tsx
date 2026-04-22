@@ -12,15 +12,17 @@ export default function EmailPopup() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    const dismissed = localStorage.getItem("liw-popup-dismissed");
-    if (!dismissed) {
+    const dismissed = localStorage.getItem("liw-popup-dismissed-at");
+    const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+    const expired = dismissed && Date.now() - Number(dismissed) > THIRTY_DAYS;
+    if (!dismissed || expired) {
       const timer = setTimeout(() => setVisible(true), 3000);
       return () => clearTimeout(timer);
     }
   }, []);
 
   const dismiss = () => {
-    localStorage.setItem("liw-popup-dismissed", "1");
+    localStorage.setItem("liw-popup-dismissed-at", String(Date.now()));
     setVisible(false);
   };
 
