@@ -27,11 +27,13 @@ const CAT_MAP: Record<string, Product["category"]> = {
   Seafood: "seafood", Vegetables: "produce",
 };
 
-function findProductChips(userText: string, aiText: string): SuggestionChip[] {
-  const combined = (userText + " " + aiText).toLowerCase();
+function findProductChips(userText: string, _aiText: string): SuggestionChip[] {
+  // Use only the user's words — AI response text creates false matches
   const stopWords = new Set(["the", "and", "for", "are", "you", "can", "how",
-    "what", "have", "any", "some", "want", "need", "our", "your", "with"]);
-  const terms = combined.split(/[\s,?.!]+/)
+    "what", "have", "any", "some", "want", "need", "our", "your", "with",
+    "get", "got", "give", "show", "find", "tell", "about", "please", "looking",
+    "much", "does", "from", "this", "that", "its", "will", "also"]);
+  const terms = userText.toLowerCase().split(/[\s,?.!]+/)
     .filter(t => t.length > 2 && !stopWords.has(t));
 
   const seen = new Set<string>();
@@ -48,10 +50,10 @@ function findProductChips(userText: string, aiText: string): SuggestionChip[] {
     }
   }
 
-  // Search CATALOG_PRODUCTS
+  // Search CATALOG_PRODUCTS — name match only
   for (const item of CATALOG_PRODUCTS) {
     if (chips.length >= 4) break;
-    if (terms.some(t => item.name.toLowerCase().includes(t) || item.category.toLowerCase().includes(t))) {
+    if (terms.some(t => item.name.toLowerCase().includes(t))) {
       if (!seen.has(item.id)) {
         seen.add(item.id);
         const product: Product = {
