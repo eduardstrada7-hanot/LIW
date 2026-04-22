@@ -1,6 +1,9 @@
 {
   "nav": {
     "home": "Home",
+    "catalog": "Product Catalog",
+    "specials": "Monthly Specials",
+    "deals": "Weekly Deals",
     "about": "About Us",
     "history": "History",
     "contact": "Contact Us",
@@ -96,7 +99,7 @@
     "hoursHeading": "Business Hours",
     "hours": "Monday – Friday: 6:00 AM – 4:00 PM\nSaturday: 6:00 AM – 12:00 PM\nSunday: Closed",
     "addressHeading": "Our Location",
-    "address": "Philadelphia, PA\nServing the Greater Philadelphia Area",
+    "address": "939 N. 2nd Street\nPhiladelphia, PA 19123\nUnited States",
     "phoneHeading": "Call Us"
   },
   "ordering": {
@@ -140,6 +143,52 @@
     "rejected": "Rejected",
     "delivered": "Delivered",
     "noteToCustomer": "Optional note to customer..."
+  },
+  "deals": {
+    "heading": "Weekly Deals & Pricing",
+    "subheading": "Fresh picks, rotating specials, and wholesale pricing — updated weekly. Call to confirm today's availability.",
+    "callToOrder": "Call to Order",
+    "note": "Prices subject to change. Minimum orders may apply. Delivery available throughout Greater Philadelphia.",
+    "perLb": "/lb",
+    "perCase": "/cs",
+    "perPc": "/pc",
+    "perBag": "/bag",
+    "perCan": "/can",
+    "perGal": "/gal",
+    "perDoz": "/doz",
+    "askForPrice": "Call for price"
+  },
+  "catalog": {
+    "heading": "Product Catalog",
+    "subheading": "Browse our full selection of wholesale food products",
+    "searchPlaceholder": "Search by name, item #, or pack size...",
+    "allCategories": "All Categories",
+    "sortBy": "Sort by",
+    "sortNameAZ": "Name A–Z",
+    "sortPriceLow": "Price: Low–High",
+    "sortPriceHigh": "Price: High–Low",
+    "sortItemNum": "Item Number",
+    "addToCart": "Add to Cart",
+    "marketPrice": "Market Price",
+    "perCase": "/cs",
+    "itemNum": "Item #",
+    "noResults": "No products found. Try a different search or category.",
+    "resultsCount": "products found",
+    "orderNow": "Order Now"
+  },
+  "specials": {
+    "heading": "April 2026 Specials",
+    "subheading": "New items and promotions this month — limited time savings",
+    "newItemsTab": "New Items",
+    "promotionsTab": "Promotions",
+    "savePerCase": "Save / case",
+    "savePerLb": "Save / lb",
+    "newBadge": "NEW",
+    "addToCart": "Add to Cart",
+    "orderNow": "Order Now",
+    "honorCode": "Honor Code",
+    "pack": "Pack",
+    "contactForPricing": "Contact for pricing"
   },
   "ai": {
     "greeting": "Hi! I'm your LIW ordering assistant. Tell me what you need and I'll find the right products for you.",

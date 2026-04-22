@@ -6,7 +6,8 @@ COMPANY INFO:
 - Name: Larry Inver Wholesale (LIW)
 - Tagline: "From Our Home to Yours"
 - Location: Greater Philadelphia, PA
-- Phone: (215) 555-0100
+- Phone: (215) 627-5323
+- Address: 939 N. 2nd Street, Philadelphia, PA 19123
 - Hours: Monday–Friday 6:00 AM – 4:00 PM, Saturday 6:00 AM – 12:00 PM
 - Minimum order: $150
 - Delivery: Greater Philadelphia area, Monday–Friday

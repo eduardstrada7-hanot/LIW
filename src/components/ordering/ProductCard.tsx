@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Plus, Minus, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import type { Product } from "@/data/products";
 import { useCartStore } from "@/lib/cart-store";
 import { formatCurrency } from "@/lib/utils";
@@ -30,11 +31,11 @@ export default function ProductCard({ product, index = 0 }: Props) {
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
-        <img
+        <Image
           src={product.imageUrl}
           alt={product.name}
-          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-          loading="lazy"
+          fill
+          className="object-cover hover:scale-105 transition-transform duration-500"
         />
         {!product.inStock && (
           <div className="absolute inset-0 bg-white/70 flex items-center justify-center">

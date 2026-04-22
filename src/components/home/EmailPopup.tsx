@@ -111,7 +111,7 @@ export default function EmailPopup() {
                   >
                     <div className="text-5xl mb-4">🎉</div>
                     <h3 className="font-serif text-xl font-bold text-stone-900 mb-2">
-                      You're on the list!
+                      You&apos;re on the list!
                     </h3>
                     <p className="text-stone-500 text-sm">
                       Welcome to the LIW family. Watch your inbox for exclusive deals.

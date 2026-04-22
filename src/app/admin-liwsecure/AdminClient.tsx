@@ -62,6 +62,7 @@ export default function AdminClient() {
   useEffect(() => {
     const token = localStorage.getItem("liw-admin-token");
     if (token) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAuthed(true);
       fetchData();
     }

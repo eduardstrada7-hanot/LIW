@@ -6,7 +6,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home, Users, BookOpen, Mail, ShoppingCart,
-  UserPlus, LogIn, ChevronDown, ChevronRight, Menu, X
+  UserPlus, LogIn, ChevronDown, ChevronRight, Menu, X,
+  LayoutGrid, Tag, BadgePercent
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -17,31 +18,24 @@ type NavItem = {
   children?: { key: string; icon: React.ReactNode; href: string }[];
 };
 
-export default function Sidebar() {
-  const t = useTranslations("nav");
-  const locale = useLocale();
-  const pathname = usePathname();
-  const [orderingOpen, setOrderingOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+type NavContentProps = {
+  navItems: NavItem[];
+  orderingOpen: boolean;
+  setOrderingOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isActive: (href: string) => boolean;
+  t: ReturnType<typeof useTranslations<"nav">>;
+};
 
-  const navItems: NavItem[] = [
-    { key: "home", icon: <Home size={18} />, href: `/${locale}` },
-    { key: "about", icon: <Users size={18} />, href: `/${locale}/about` },
-    { key: "history", icon: <BookOpen size={18} />, href: `/${locale}/history` },
-    { key: "contact", icon: <Mail size={18} />, href: `/${locale}/contact` },
-    {
-      key: "ordering",
-      icon: <ShoppingCart size={18} />,
-      children: [
-        { key: "guestOrder", icon: <UserPlus size={16} />, href: `/${locale}/ordering/guest` },
-        { key: "login", icon: <LogIn size={16} />, href: `/${locale}/ordering/login` },
-      ],
-    },
-  ];
-
-  const isActive = (href: string) => pathname === href;
-
-  const NavContent = () => (
+function NavContent({
+  navItems,
+  orderingOpen,
+  setOrderingOpen,
+  setSidebarOpen,
+  isActive,
+  t,
+}: NavContentProps) {
+  return (
     <nav className="flex flex-col gap-1 p-4 pt-24">
       {navItems.map((item) => (
         <div key={item.key}>
@@ -119,6 +113,36 @@ export default function Sidebar() {
       ))}
     </nav>
   );
+}
+
+export default function Sidebar() {
+  const t = useTranslations("nav");
+  const locale = useLocale();
+  const pathname = usePathname();
+  const [orderingOpen, setOrderingOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const navItems: NavItem[] = [
+    { key: "home", icon: <Home size={18} />, href: `/${locale}` },
+    { key: "catalog", icon: <LayoutGrid size={18} />, href: `/${locale}/catalog` },
+    { key: "specials", icon: <Tag size={18} />, href: `/${locale}/specials` },
+    { key: "deals", icon: <BadgePercent size={18} />, href: `/${locale}/deals` },
+    { key: "about", icon: <Users size={18} />, href: `/${locale}/about` },
+    { key: "history", icon: <BookOpen size={18} />, href: `/${locale}/history` },
+    { key: "contact", icon: <Mail size={18} />, href: `/${locale}/contact` },
+    {
+      key: "ordering",
+      icon: <ShoppingCart size={18} />,
+      children: [
+        { key: "guestOrder", icon: <UserPlus size={16} />, href: `/${locale}/ordering/guest` },
+        { key: "login", icon: <LogIn size={16} />, href: `/${locale}/ordering/login` },
+      ],
+    },
+  ];
+
+  const isActive = (href: string) => pathname === href;
+
+  const navProps = { navItems, orderingOpen, setOrderingOpen, setSidebarOpen, isActive, t };
 
   return (
     <>
@@ -154,14 +178,14 @@ export default function Sidebar() {
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed left-0 top-0 bottom-0 w-72 bg-white z-40 lg:hidden shadow-2xl"
           >
-            <NavContent />
+            <NavContent {...navProps} />
           </motion.aside>
         )}
       </AnimatePresence>
 
       {/* Desktop sidebar */}
       <aside className="hidden lg:block fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-stone-100 z-40">
-        <NavContent />
+        <NavContent {...navProps} />
       </aside>
     </>
   );

@@ -24,7 +24,7 @@ export default function CTABanner() {
 
           <div className="relative z-10">
             <span className="inline-block px-4 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-sm font-semibold mb-4 border border-amber-500/20">
-              Philadelphia's Trusted Wholesale Partner
+              Philadelphia&apos;s Trusted Wholesale Partner
             </span>
 
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">
@@ -52,7 +52,7 @@ export default function CTABanner() {
 
             <div className="mt-8 flex items-center justify-center gap-2 text-stone-500 text-sm">
               <Phone size={14} />
-              <span>Questions? Call us: <span className="text-stone-300 font-medium">(215) 555-0100</span></span>
+              <a href="tel:+12156275323" className="hover:text-stone-300 transition-colors">Questions? Call us: <span className="text-stone-300 font-medium">(215) 627-5323</span></a>
             </div>
           </div>
         </motion.div>

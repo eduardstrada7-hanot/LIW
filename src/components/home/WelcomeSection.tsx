@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { CheckCircle } from "lucide-react";
+import Image from "next/image";
 
 const FEATURES = [
   "Next-day delivery across Greater Philadelphia",
@@ -66,12 +67,13 @@ export default function WelcomeSection() {
           ].map((url, i) => (
             <div
               key={i}
-              className={`rounded-2xl overflow-hidden ${i === 0 ? "col-span-2 aspect-video" : "aspect-square"}`}
+              className={`rounded-2xl overflow-hidden relative ${i === 0 ? "col-span-2 aspect-video" : "aspect-square"}`}
             >
-              <img
+              <Image
                 src={url}
                 alt=""
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-500"
               />
             </div>
           ))}

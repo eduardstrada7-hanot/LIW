@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { MessageCircle, X, Send, ShoppingCart, Bot } from "lucide-react";
 import { useCartStore } from "@/lib/cart-store";
 import { PRODUCTS } from "@/data/products";
@@ -28,7 +28,7 @@ function findProductChips(text: string): SuggestionChip[] {
 
 export default function AIAssistant() {
   const t = useTranslations("ai");
-  const locale = useLocale();
+
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: t("greeting") },

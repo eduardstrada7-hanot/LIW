@@ -1,6 +1,9 @@
 {
   "nav": {
     "home": "Inicio",
+    "catalog": "Catálogo de Productos",
+    "specials": "Especiales del Mes",
+    "deals": "Ofertas Semanales",
     "about": "Nosotros",
     "history": "Historia",
     "contact": "Contáctenos",
@@ -96,7 +99,7 @@
     "hoursHeading": "Horario de Atención",
     "hours": "Lunes – Viernes: 6:00 AM – 4:00 PM\nSábado: 6:00 AM – 12:00 PM\nDomingo: Cerrado",
     "addressHeading": "Nuestra Ubicación",
-    "address": "Filadelfia, PA\nServimos el Área Metropolitana de Filadelfia",
+    "address": "939 N. 2nd Street\nFiladelfia, PA 19123\nEstados Unidos",
     "phoneHeading": "Llámanos"
   },
   "ordering": {
@@ -140,6 +143,52 @@
     "rejected": "Rechazado",
     "delivered": "Entregado",
     "noteToCustomer": "Nota opcional para el cliente..."
+  },
+  "deals": {
+    "heading": "Ofertas Semanales y Precios",
+    "subheading": "Selecciones frescas, especiales rotativos y precios al por mayor — actualizado semanalmente. Llame para confirmar disponibilidad.",
+    "callToOrder": "Llamar para Ordenar",
+    "note": "Precios sujetos a cambio. Pueden aplicar pedidos mínimos. Entrega disponible en toda el área de Filadelfia.",
+    "perLb": "/lb",
+    "perCase": "/caja",
+    "perPc": "/pieza",
+    "perBag": "/bolsa",
+    "perCan": "/lata",
+    "perGal": "/galón",
+    "perDoz": "/docena",
+    "askForPrice": "Llame para precio"
+  },
+  "catalog": {
+    "heading": "Catálogo de Productos",
+    "subheading": "Explore nuestra selección completa de productos alimenticios al por mayor",
+    "searchPlaceholder": "Buscar por nombre, # de artículo o tamaño de paquete...",
+    "allCategories": "Todas las Categorías",
+    "sortBy": "Ordenar por",
+    "sortNameAZ": "Nombre A–Z",
+    "sortPriceLow": "Precio: Menor–Mayor",
+    "sortPriceHigh": "Precio: Mayor–Menor",
+    "sortItemNum": "Número de Artículo",
+    "addToCart": "Agregar al Carrito",
+    "marketPrice": "Precio de Mercado",
+    "perCase": "/caja",
+    "itemNum": "Art. #",
+    "noResults": "No se encontraron productos. Intenta con otra búsqueda o categoría.",
+    "resultsCount": "productos encontrados",
+    "orderNow": "Ordenar Ahora"
+  },
+  "specials": {
+    "heading": "Especiales de Abril 2026",
+    "subheading": "Nuevos artículos y promociones este mes — ahorros por tiempo limitado",
+    "newItemsTab": "Nuevos Artículos",
+    "promotionsTab": "Promociones",
+    "savePerCase": "Ahorro / caja",
+    "savePerLb": "Ahorro / lb",
+    "newBadge": "NUEVO",
+    "addToCart": "Agregar al Carrito",
+    "orderNow": "Ordenar Ahora",
+    "honorCode": "Código Honor",
+    "pack": "Paquete",
+    "contactForPricing": "Contacte para precios"
   },
   "ai": {
     "greeting": "¡Hola! Soy tu asistente de pedidos LIW. Dime qué necesitas y encontraré los productos correctos para ti.",

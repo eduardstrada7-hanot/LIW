@@ -1,5 +1,6 @@
 import Hero from "@/components/home/Hero";
 import WelcomeSection from "@/components/home/WelcomeSection";
+import HeritageSection from "@/components/home/HeritageSection";
 import CategoryHighlights from "@/components/home/CategoryHighlights";
 import Testimonials from "@/components/home/Testimonials";
 import CTABanner from "@/components/home/CTABanner";
@@ -11,6 +12,7 @@ export default function HomePage() {
       <EmailPopup />
       <Hero />
       <WelcomeSection />
+      <HeritageSection />
       <CategoryHighlights />
       <Testimonials />
       <CTABanner />

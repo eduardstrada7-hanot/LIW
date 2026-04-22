@@ -45,11 +45,13 @@ const jsonLd = {
   description:
     "Premium wholesale food distributor serving the Greater Philadelphia area.",
   url: "https://larryinverwholesale.com",
-  telephone: "(215) 555-0100",
+  telephone: "(215) 627-5323",
   address: {
     "@type": "PostalAddress",
+    streetAddress: "939 N. 2nd Street",
     addressLocality: "Philadelphia",
     addressRegion: "PA",
+    postalCode: "19123",
     addressCountry: "US",
   },
   openingHoursSpecification: [
