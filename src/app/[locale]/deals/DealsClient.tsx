@@ -164,17 +164,17 @@ function SectionCard({
       {/* Tappable header */}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-4 bg-stone-50 hover:bg-stone-100 transition-colors text-left"
+        className="w-full flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-4 bg-stone-50 hover:bg-stone-100 transition-colors text-left"
       >
-        <span className="text-xl sm:text-2xl">{section.icon}</span>
+        <span className="text-lg sm:text-2xl">{section.icon}</span>
         <span className="font-serif text-sm sm:text-lg font-bold text-stone-900 flex-1">
           {section.title}
         </span>
-        <span className="bg-red-100 text-red-700 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full shrink-0">
-          {section.items.length} deals
+        <span className="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0">
+          {section.items.length}
         </span>
         <ChevronDown
-          size={16}
+          size={14}
           className={cn(
             "text-stone-400 shrink-0 transition-transform duration-200",
             open && "rotate-180"
@@ -201,40 +201,38 @@ function SectionCard({
                 return (
                   <div
                     key={`${item.name}-${idx}`}
-                    className="flex items-center gap-2 px-4 sm:px-5 py-2.5 hover:bg-stone-50 transition-colors"
+                    className="flex items-center gap-2 px-3 sm:px-5 py-1.5 sm:py-2.5 hover:bg-stone-50 transition-colors"
                   >
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-stone-800 leading-snug truncate">
-                        {item.name}
-                        {item.hot && (
-                          <span className="ml-1.5 bg-red-100 text-red-600 text-[9px] font-bold px-1 py-0.5 rounded-full uppercase">
-                            Hot
-                          </span>
-                        )}
-                      </p>
+                    <p className="flex-1 min-w-0 text-xs sm:text-sm font-medium text-stone-800 truncate">
+                      {item.name}
                       {item.note && (
-                        <p className="text-[10px] text-stone-400 mt-0.5 truncate">{item.note}</p>
+                        <span className="text-stone-400 font-normal"> · {item.note}</span>
                       )}
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
+                      {item.hot && (
+                        <span className="ml-1 bg-red-100 text-red-600 text-[9px] font-bold px-1 py-0.5 rounded-full uppercase">
+                          Hot
+                        </span>
+                      )}
+                    </p>
+                    <div className="flex items-center gap-1.5 shrink-0">
                       {isMarket ? (
-                        <span className="text-xs font-semibold text-red-500 italic whitespace-nowrap">
+                        <span className="text-[10px] sm:text-xs font-semibold text-red-500 italic whitespace-nowrap">
                           Call for Price
                         </span>
                       ) : (
-                        <span className="text-sm font-bold text-stone-900 whitespace-nowrap">
+                        <span className="text-xs sm:text-sm font-bold text-stone-900 whitespace-nowrap">
                           {item.price}
-                          <span className="text-xs font-normal text-stone-400 ml-0.5">{item.unit}</span>
+                          <span className="text-[10px] font-normal text-stone-400 ml-0.5">{item.unit}</span>
                         </span>
                       )}
                       <button
                         onClick={() => onAdd(product.id, product)}
                         className={cn(
-                          "flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all shrink-0",
+                          "flex items-center gap-0.5 px-2 py-1 rounded-lg text-[10px] sm:text-xs font-bold transition-all shrink-0",
                           isAdded ? "bg-green-500 text-white" : "bg-red-600 hover:bg-red-700 text-white"
                         )}
                       >
-                        {isAdded ? <><Check size={11} /> Added!</> : <><ShoppingCart size={11} /> Add</>}
+                        {isAdded ? <><Check size={10} /> Added!</> : <><ShoppingCart size={10} /> Add</>}
                       </button>
                     </div>
                   </div>
