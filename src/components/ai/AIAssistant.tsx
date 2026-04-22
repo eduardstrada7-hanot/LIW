@@ -4,7 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { MessageCircle, X, Send, ShoppingCart, Bot } from "lucide-react";
 import { useCartStore } from "@/lib/cart-store";
-import { PRODUCTS } from "@/data/products";
+import { PRODUCTS, type Product } from "@/data/products";
+import { CATALOG_PRODUCTS } from "@/data/catalog";
+import { DEAL_SECTIONS, dealItemToProduct } from "@/data/deals";
 import { formatCurrency } from "@/lib/utils";
 
 type Message = {
@@ -15,15 +17,78 @@ type Message = {
 
 type SuggestionChip = {
   label: string;
-  productId: string;
+  product: Product;
 };
 
-function findProductChips(text: string): SuggestionChip[] {
-  const lower = text.toLowerCase();
-  const matched = PRODUCTS.filter((p) =>
-    p.name.toLowerCase().split(" ").some((word) => lower.includes(word))
-  ).slice(0, 3);
-  return matched.map((p) => ({ label: `${p.name} — ${p.unitSize}`, productId: p.id }));
+const CAT_MAP: Record<string, Product["category"]> = {
+  Potatoes: "produce", Appetizers: "dryGoods", "Bread Products": "dryGoods",
+  Cheese: "dairy", Dairy: "dairy", Condiments: "dryGoods", "Dry Goods": "dryGoods",
+  Meats: "meats", Poultry: "meats", "Prepared Foods": "dryGoods",
+  Seafood: "seafood", Vegetables: "produce",
+};
+
+function findProductChips(userText: string, aiText: string): SuggestionChip[] {
+  const combined = (userText + " " + aiText).toLowerCase();
+  const stopWords = new Set(["the", "and", "for", "are", "you", "can", "how",
+    "what", "have", "any", "some", "want", "need", "our", "your", "with"]);
+  const terms = combined.split(/[\s,?.!]+/)
+    .filter(t => t.length > 2 && !stopWords.has(t));
+
+  const seen = new Set<string>();
+  const chips: SuggestionChip[] = [];
+
+  // Search PRODUCTS (ordering products — have images + full data)
+  for (const p of PRODUCTS) {
+    if (chips.length >= 4) break;
+    if (terms.some(t => p.name.toLowerCase().includes(t))) {
+      if (!seen.has(p.id)) {
+        seen.add(p.id);
+        chips.push({ label: `${p.name} — ${p.unitSize} · ${formatCurrency(p.price)}`, product: p });
+      }
+    }
+  }
+
+  // Search CATALOG_PRODUCTS
+  for (const item of CATALOG_PRODUCTS) {
+    if (chips.length >= 4) break;
+    if (terms.some(t => item.name.toLowerCase().includes(t) || item.category.toLowerCase().includes(t))) {
+      if (!seen.has(item.id)) {
+        seen.add(item.id);
+        const product: Product = {
+          id: item.id,
+          name: item.name,
+          category: CAT_MAP[item.category] ?? "dryGoods",
+          unitSize: item.pack,
+          price: item.price ?? 0,
+          imageUrl: "",
+          description: `${item.pack} — ${item.category}`,
+          inStock: true,
+        };
+        chips.push({
+          label: `${item.name} — ${item.pack}${item.price != null ? ` · $${item.price}/cs` : ""}`,
+          product,
+        });
+      }
+    }
+  }
+
+  // Search DEAL_SECTIONS
+  for (const section of DEAL_SECTIONS) {
+    if (chips.length >= 4) break;
+    for (const item of section.items) {
+      if (chips.length >= 4) break;
+      if (terms.some(t => item.name.toLowerCase().includes(t) || section.title.toLowerCase().includes(t))) {
+        const product = dealItemToProduct(item, section, section.items.indexOf(item));
+        if (!seen.has(product.id)) {
+          seen.add(product.id);
+          const priceLabel = item.price === "Market" ? "call for price" : `${item.price}${item.unit}`;
+          chips.push({ label: `${item.name} — ${priceLabel} [Deal]`, product });
+        }
+      }
+    }
+  }
+
+  return chips;
 }
 
 export default function AIAssistant() {
@@ -49,8 +114,7 @@ export default function AIAssistant() {
   };
 
   const handleChipClick = (chip: SuggestionChip) => {
-    const product = PRODUCTS.find((p) => p.id === chip.productId);
-    if (!product) return;
+    const product = chip.product;
     addItem(product, 1);
     setMessages((m) => [
       ...m,
@@ -105,7 +169,7 @@ export default function AIAssistant() {
       }
 
       // Find product chips from the response
-      const chips = findProductChips(full + " " + text);
+      const chips = findProductChips(text, full);
       if (chips.length > 0) {
         setMessages((m) => {
           const updated = [...m];
@@ -188,7 +252,7 @@ export default function AIAssistant() {
                         <div className="flex flex-col gap-1.5">
                           {msg.chips.map((chip) => (
                             <button
-                              key={chip.productId}
+                              key={chip.product.id}
                               onClick={() => handleChipClick(chip)}
                               className="flex items-center gap-2 px-3 py-2 bg-white border border-amber-200 hover:border-amber-400 hover:bg-amber-50 text-amber-700 rounded-xl text-xs font-medium text-left transition-all group"
                             >
