@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 export default function EmailPopup() {
@@ -67,9 +68,15 @@ export default function EmailPopup() {
               <div className="p-8">
                 {!submitted ? (
                   <>
-                    {/* Icon */}
-                    <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-5">
-                      <span className="text-3xl">🏠</span>
+                    {/* Logo */}
+                    <div className="mb-5">
+                      <Image
+                        src="/logo-simplified.png"
+                        alt="LIW Logo"
+                        width={80}
+                        height={80}
+                        className="object-contain"
+                      />
                     </div>
 
                     <h2 className="font-serif text-2xl font-bold text-stone-900 mb-2">

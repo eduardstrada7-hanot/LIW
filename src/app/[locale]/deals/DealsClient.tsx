@@ -25,7 +25,7 @@ export default function DealsClient() {
   return (
     <div className="min-h-screen bg-[#fafaf8]">
       {/* Hero */}
-      <div className="bg-stone-900 pt-24 pb-14 px-6 relative overflow-hidden">
+      <div className="bg-stone-900 pt-24 pb-12 px-4 sm:px-6 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{
           backgroundImage: `repeating-linear-gradient(45deg, white 0, white 1px, transparent 0, transparent 50%)`,
           backgroundSize: "20px 20px"
@@ -35,26 +35,26 @@ export default function DealsClient() {
             <Tag size={14} className="text-red-400" />
             <p className="text-red-400 text-xs font-bold tracking-widest uppercase">Larry Inver Wholesale Foods</p>
           </div>
-          <h1 className="font-serif text-3xl md:text-5xl font-bold text-white mb-3 leading-tight">
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-3 leading-tight">
             {t("heading")}
           </h1>
           <p className="text-stone-400 max-w-2xl text-sm leading-relaxed">{t("subheading")}</p>
 
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-6 flex flex-wrap gap-3">
             <a
               href="tel:+12156275323"
-              className="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-full text-sm font-semibold transition-colors shadow-lg"
+              className="flex items-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-full text-sm font-semibold transition-colors shadow-lg"
             >
               <Phone size={14} />
               (215) 627-5323
             </a>
-            <div className="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-stone-300 rounded-full text-sm">
+            <div className="flex items-center gap-2 px-4 py-2.5 bg-white/10 text-stone-300 rounded-full text-sm">
               <RefreshCw size={13} />
               Updated weekly
             </div>
             <Link
               href={`/${locale}/ordering/guest`}
-              className="flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white rounded-full text-sm transition-colors"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white rounded-full text-sm transition-colors"
             >
               Order Online <ArrowRight size={13} />
             </Link>
@@ -105,14 +105,14 @@ export default function DealsClient() {
           ))}
 
         {/* Disclaimer + CTA */}
-        <div className="rounded-3xl bg-stone-900 p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="rounded-3xl bg-stone-900 p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
           <div>
-            <h3 className="font-serif text-xl font-bold text-white mb-1">
+            <h3 className="font-serif text-lg sm:text-xl font-bold text-white mb-1">
               Pick Up at 939 N. 2nd Street, Philadelphia, PA 19123
             </h3>
             <p className="text-stone-400 text-sm leading-relaxed">{t("note")}</p>
           </div>
-          <div className="flex flex-wrap gap-3 shrink-0">
+          <div className="flex flex-wrap gap-3 shrink-0 w-full md:w-auto">
             <a
               href="tel:+12156275323"
               className="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full text-sm font-semibold transition-colors"
@@ -167,8 +167,9 @@ function SectionCard({
           return (
             <div
               key={`${item.name}-${idx}`}
-              className="flex items-center gap-2 sm:gap-4 px-4 sm:px-5 py-3 hover:bg-stone-50 transition-colors"
+              className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 px-4 sm:px-5 py-3.5 hover:bg-stone-50 transition-colors"
             >
+              {/* Name + note */}
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-stone-800 leading-snug">
                   {item.name}
@@ -182,7 +183,9 @@ function SectionCard({
                   <p className="text-xs text-stone-400 mt-0.5">{item.note}</p>
                 )}
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+
+              {/* Price + button — always inline with each other */}
+              <div className="flex items-center gap-3 shrink-0">
                 {isMarket ? (
                   <span className="text-xs font-semibold text-red-500 italic whitespace-nowrap">Call for Price</span>
                 ) : (
@@ -194,7 +197,7 @@ function SectionCard({
                 <button
                   onClick={() => onAdd(product.id, product)}
                   className={cn(
-                    "flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0",
+                    "flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0",
                     isAdded ? "bg-green-500 text-white" : "bg-red-600 hover:bg-red-700 text-white"
                   )}
                 >
