@@ -61,7 +61,7 @@ export default function CategoryHighlights() {
             {t("categoriesHeading")}
           </h2>
           <p className="text-stone-500 mt-3 text-sm">
-            Click any category to browse the full catalog
+            Click any category to browse the full catalogue
           </p>
         </motion.div>
 

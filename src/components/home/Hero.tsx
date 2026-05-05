@@ -108,7 +108,7 @@ export default function Hero() {
               {[
                 { label: "200+", desc: "Active Clients" },
                 { label: "40+", desc: "Years Serving Philly" },
-                { label: "1,000+", desc: "Products in Catalog" },
+                { label: "1,000+", desc: "Products in Catalogue" },
               ].map((s) => (
                 <div key={s.label}>
                   <p className="text-2xl font-bold text-white">{s.label}</p>

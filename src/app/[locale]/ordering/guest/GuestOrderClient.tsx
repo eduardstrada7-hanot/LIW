@@ -409,7 +409,7 @@ function BrowseStep({ t }: { t: ReturnType<typeof useTranslations> }) {
     },
     {
       id: "catalog",
-      label: "Full Catalog",
+      label: "Full Catalogue",
       icon: <LayoutGrid size={14} />,
       count: CATALOG_PRODUCTS.length,
     },

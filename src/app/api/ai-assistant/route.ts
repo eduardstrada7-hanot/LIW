@@ -76,7 +76,7 @@ function buildProductContext(userMessage: string): string {
   }
 
   if (lines.length === 0) {
-    return `No exact matches for "${userMessage}". Suggest calling (215) 627-5323 or browsing the catalog. Categories: Meats, Poultry, Seafood, Dairy, Cheese, Vegetables, Potatoes, Dry Goods, Bread Products, Condiments.`;
+    return `No exact matches for "${userMessage}". Suggest calling (215) 627-5323 or browsing the catalogue. Categories: Meats, Poultry, Seafood, Dairy, Cheese, Vegetables, Potatoes, Dry Goods, Bread Products, Condiments.`;
   }
 
   return lines.join("\n\n");
@@ -115,7 +115,7 @@ function buildFallbackReply(userMessage: string): string {
 
   if (catalogHits.length > 0) {
     const items = catalogHits.map(p => `${p.name} (${p.pack}${p.price != null ? `, $${p.price}/cs` : ""})`).join(", ");
-    results.push(`From our catalog: ${items}.`);
+    results.push(`From our catalogue: ${items}.`);
   }
 
   if (dealHits.length > 0) {
@@ -124,7 +124,7 @@ function buildFallbackReply(userMessage: string): string {
   }
 
   if (results.length === 0) {
-    return `I couldn't find an exact match for "${userMessage}" — we carry thousands of items. Please call us at (215) 627-5323 or browse the full catalog for everything we offer.`;
+    return `I couldn't find an exact match for "${userMessage}" — we carry thousands of items. Please call us at (215) 627-5323 or browse the full catalogue for everything we offer.`;
   }
 
   return results.join(" ") + " Want me to add anything to your cart, or call (215) 627-5323 for custom orders?";

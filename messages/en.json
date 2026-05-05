@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Home",
-    "catalog": "Product Catalog",
+    "catalog": "Product Catalogue",
     "specials": "Monthly Specials",
     "deals": "Weekly Deals",
     "about": "About Us",
@@ -159,7 +159,7 @@
     "askForPrice": "Call for price"
   },
   "catalog": {
-    "heading": "Product Catalog",
+    "heading": "Product Catalogue",
     "subheading": "Browse our full selection of wholesale food products",
     "searchPlaceholder": "Search by name, item #, or pack size...",
     "allCategories": "All Categories",
