@@ -124,7 +124,7 @@ export default function Sidebar() {
 
   const navItems: NavItem[] = [
     { key: "home", icon: <Home size={18} />, href: `/${locale}` },
-    { key: "catalog", icon: <LayoutGrid size={18} />, href: `/${locale}/catalog` },
+    { key: "catalog", icon: <LayoutGrid size={18} />, href: `/${locale}/catalogue` },
     { key: "specials", icon: <Tag size={18} />, href: `/${locale}/specials` },
     { key: "deals", icon: <BadgePercent size={18} />, href: `/${locale}/deals` },
     { key: "about", icon: <Users size={18} />, href: `/${locale}/about` },

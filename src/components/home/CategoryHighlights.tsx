@@ -75,7 +75,7 @@ export default function CategoryHighlights() {
               transition={{ delay: i * 0.1, duration: 0.5 }}
             >
               <Link
-                href={`/${locale}/catalog?category=${CATALOG_LINKS[key]}`}
+                href={`/${locale}/catalogue?category=${CATALOG_LINKS[key]}`}
                 className="group relative block aspect-[4/5] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-400"
               >
                 {/* Background image — zooms on hover */}
