@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Phone, RefreshCw, ArrowRight, Tag, ShoppingCart, Check } from "lucide-react";
+import { Phone, RefreshCw, ArrowRight, Tag, ShoppingCart, Check, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/lib/cart-store";
 import { DEAL_SECTIONS, dealItemToProduct, type DealSection } from "@/data/deals";
@@ -13,6 +13,7 @@ export default function DealsClient() {
   const t = useTranslations("deals");
   const locale = useLocale();
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
   const [addedId, setAddedId] = useState<string | null>(null);
   const addItem = useCartStore((s) => s.addItem);
 
@@ -22,9 +23,14 @@ export default function DealsClient() {
     setTimeout(() => setAddedId(null), 1500);
   }
 
-  const visibleSections = DEAL_SECTIONS.filter(
-    (s) => activeSection === null || s.title === activeSection
-  );
+  const q = search.trim().toLowerCase();
+
+  const visibleSections = DEAL_SECTIONS
+    .filter((s) => activeSection === null || s.title === activeSection)
+    .map(s => ({ ...s, items: q ? s.items.filter(i => i.name.toLowerCase().includes(q)) : s.items }))
+    .filter(s => s.items.length > 0);
+
+  const totalResults = visibleSections.reduce((a, s) => a + s.items.length, 0);
 
   return (
     <div className="min-h-screen bg-[#fafaf8]">
@@ -92,6 +98,31 @@ export default function DealsClient() {
 
       {/* Content — same structure as specials page */}
       <div className="max-w-screen-xl mx-auto px-4 py-10">
+
+        {/* Search bar */}
+        <div className="relative max-w-xl mb-8">
+          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search deals by name…"
+            className="w-full pl-10 pr-10 py-3 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-300 bg-white shadow-sm transition-all"
+          />
+          {search && (
+            <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition-colors">
+              <X size={16} />
+            </button>
+          )}
+        </div>
+        {search && (
+          <p className="text-sm text-stone-500 mb-6">
+            {totalResults > 0
+              ? <><span className="font-bold text-stone-800">{totalResults}</span> result{totalResults !== 1 ? "s" : ""} for &ldquo;{search}&rdquo;</>
+              : <>No results for &ldquo;{search}&rdquo; — try a different term</>}
+          </p>
+        )}
+
         <div className="grid gap-6">
           {visibleSections.map((section, i) => (
             <SectionCard

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Tag, Sparkles, ArrowRight, ShoppingCart, Check } from "lucide-react";
+import { Tag, Sparkles, ArrowRight, ShoppingCart, Check, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/lib/cart-store";
 import {
@@ -17,8 +17,28 @@ export default function SpecialsClient() {
   const t = useTranslations("specials");
   const locale = useLocale();
   const [tab, setTab] = useState<Tab>("new");
+  const [search, setSearch] = useState("");
   const [addedId, setAddedId] = useState<string | null>(null);
   const addItem = useCartStore((s) => s.addItem);
+
+  const q = search.trim().toLowerCase();
+
+  const filteredNew = NEW_ITEMS
+    .map(s => ({ ...s, items: q ? s.items.filter(i => i.name.toLowerCase().includes(q)) : s.items }))
+    .filter(s => s.items.length > 0);
+
+  const filteredPromos = PROMO_SECTIONS
+    .map(s => ({ ...s, items: q ? s.items.filter(i => i.name.toLowerCase().includes(q)) : s.items }))
+    .filter(s => s.items.length > 0);
+
+  const totalResults = tab === "new"
+    ? filteredNew.reduce((a, s) => a + s.items.length, 0)
+    : filteredPromos.reduce((a, s) => a + s.items.length, 0);
+
+  function handleTabChange(newTab: Tab) {
+    setTab(newTab);
+    setSearch("");
+  }
 
   function handleAdd(id: string, product: Parameters<typeof addItem>[0]) {
     addItem(product, 1);
@@ -40,7 +60,7 @@ export default function SpecialsClient() {
 
           <div className="mt-8 flex gap-2 flex-wrap">
             <button
-              onClick={() => setTab("new")}
+              onClick={() => handleTabChange("new")}
               className={cn(
                 "flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all",
                 tab === "new" ? "bg-red-600 text-white shadow-lg" : "bg-white/10 text-stone-300 hover:bg-white/20"
@@ -53,7 +73,7 @@ export default function SpecialsClient() {
               </span>
             </button>
             <button
-              onClick={() => setTab("promos")}
+              onClick={() => handleTabChange("promos")}
               className={cn(
                 "flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all",
                 tab === "promos" ? "bg-red-600 text-white shadow-lg" : "bg-white/10 text-stone-300 hover:bg-white/20"
@@ -70,10 +90,35 @@ export default function SpecialsClient() {
       </div>
 
       <div className="max-w-screen-xl mx-auto px-4 py-10">
+
+        {/* Search bar */}
+        <div className="relative max-w-xl mb-8">
+          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search specials by name…"
+            className="w-full pl-10 pr-10 py-3 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-300 bg-white shadow-sm transition-all"
+          />
+          {search && (
+            <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition-colors">
+              <X size={16} />
+            </button>
+          )}
+        </div>
+        {search && (
+          <p className="text-sm text-stone-500 mb-6">
+            {totalResults > 0
+              ? <><span className="font-bold text-stone-800">{totalResults}</span> result{totalResults !== 1 ? "s" : ""} for &ldquo;{search}&rdquo;</>
+              : <>No results for &ldquo;{search}&rdquo; — try a different term</>}
+          </p>
+        )}
+
         {tab === "new" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <div className="grid gap-6">
-              {NEW_ITEMS.map((section) => (
+              {filteredNew.map((section) => (
                 <div key={section.category} className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
                   {/* Section header */}
                   <div className="flex items-center gap-3 px-5 py-4 bg-stone-50 border-b border-stone-100">
@@ -123,7 +168,7 @@ export default function SpecialsClient() {
         {tab === "promos" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <div className="grid gap-6">
-              {PROMO_SECTIONS.map((section) => (
+              {filteredPromos.map((section) => (
                 <div key={section.category} className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
                   {/* Section header */}
                   <div className="flex items-center gap-3 px-5 py-4 bg-stone-50 border-b border-stone-100">
